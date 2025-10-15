@@ -1,20 +1,25 @@
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme.web';
 import { MaterialIcons } from '@expo/vector-icons';
 import React, { Linking, StyleSheet, Text, View } from 'react-native';
 import { GainersAndLooser, ScreenType } from '../service/Api';
 
-const Entry = ({entry, type}: {entry: GainersAndLooser; type: ScreenType}) => {
+const Entry = ({ entry, type }: { entry: GainersAndLooser; type: ScreenType }) => {
+  const colorScheme = useColorScheme();
   const positiveNegative = type === ScreenType.LOOSERS ? '' : '+';
   const valueStyle =
     type === ScreenType.LOOSERS ? styles.negativeValue : styles.positiveValue;
+  const textColor = colorScheme ? Colors[colorScheme].text : Colors.dark.text
   return (
     <View style={styles.entryContainer}>
       <View style={styles.entryDetails}>
-        <Text style={styles.scripName}>{entry.scripname}</Text>
-        <Text style={styles.scripLongName}>{entry.LONG_NAME}</Text>
+        <Text style={[styles.scripName, { color: textColor }]}>{entry.scripname}</Text>
+        <Text style={[styles.scripLongName, { color: textColor }]}>{entry.LONG_NAME}</Text>
       </View>
       <View style={styles.newsContainer}>
         <MaterialIcons
           name="insert-chart-outlined"
+          color={textColor}
           size={32}
           style={styles.iconStyle}
           onPress={() =>
@@ -25,7 +30,7 @@ const Entry = ({entry, type}: {entry: GainersAndLooser; type: ScreenType}) => {
         />
       </View>
       <View style={styles.entryValue}>
-        <Text style={styles.value}>{entry.ltradert}</Text>
+        <Text style={[styles.value, {color:textColor}]}>{entry.ltradert}</Text>
         <Text
           style={
             valueStyle
