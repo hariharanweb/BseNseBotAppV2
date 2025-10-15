@@ -5,7 +5,6 @@ export default function Loosers() {
     return (
         <GainersLoosers
             type={ScreenType.LOOSERS}
-            allStocks={true}
         />
     )
 }

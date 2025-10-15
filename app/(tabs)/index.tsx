@@ -5,7 +5,6 @@ export default function HomeScreen() {
   return (
     <GainersLoosers
       type={ScreenType.GAINERS}
-      allStocks={true}
     />
   );
 }

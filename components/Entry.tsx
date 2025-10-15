@@ -14,8 +14,8 @@ const Entry = ({entry, type}: {entry: GainersAndLooser; type: ScreenType}) => {
       </View>
       <View style={styles.newsContainer}>
         <MaterialIcons
-          name="trending-up"
-          size={24}
+          name="insert-chart-outlined"
+          size={32}
           style={styles.iconStyle}
           onPress={() =>
             Linking.openURL(

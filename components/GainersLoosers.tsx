@@ -4,18 +4,16 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 const ListHeader = (header: string) => () =>
-  (
-    <View style={styles.headerContainer}>
-      <Text style={styles.headerText}>{header}</Text>
-    </View>
-  );
+(
+  <View style={styles.headerContainer}>
+    <Text style={styles.headerText}>{header}</Text>
+  </View>
+);
 
 const GainersLoosers = ({
-  type = ScreenType.LOOSERS,
-  allStocks,
+  type = ScreenType.LOOSERS
 }: {
   type: ScreenType;
-  allStocks: boolean;
 }) => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const [data, setData] = useState<APIResponse>();
@@ -30,20 +28,24 @@ const GainersLoosers = ({
     })();
   }, [loaded, type]);
 
-  const dataToDisplay = allStocks ? data?.gainersAndLoosers : data?.interesting;
-  const headerText = allStocks ? 'All Stocks' : 'Interesting';
   return (
     loaded &&
-    dataToDisplay && (
+    data && (
       <>
         <FlatList
-          data={dataToDisplay}
-          ListHeaderComponent={ListHeader(headerText)}
+          data={data?.interesting}
+          ListHeaderComponent={ListHeader('Interesting')}
           stickyHeaderIndices={[0]}
-          renderItem={({item}) => (
-            <>
-              <Entry entry={item} type={type} />
-            </>
+          renderItem={({ item }) => (
+            <Entry entry={item} type={type} />
+          )}
+        />
+        <FlatList
+          data={data?.gainersAndLoosers}
+          ListHeaderComponent={ListHeader('All Stocks')}
+          stickyHeaderIndices={[0]}
+          renderItem={({ item }) => (
+            <Entry entry={item} type={type} />
           )}
         />
       </>

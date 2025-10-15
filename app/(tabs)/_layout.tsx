@@ -20,14 +20,14 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Gainers',
-          tabBarIcon: () => <MaterialIcons color={'red'} size={28} name={'trending-up'} />,
+          tabBarIcon: () => <MaterialIcons color={'red'} size={32} name={'trending-up'} />
         }}
       />
       <Tabs.Screen
         name="Loosers"
         options={{
           title: 'Loosers',
-          tabBarIcon: () => <MaterialIcons color={'green'} size={28} name={'trending-down'} />,
+          tabBarIcon: () => <MaterialIcons color={'green'} size={32} name={'trending-down'} />,
         }}
       />
     </Tabs>
