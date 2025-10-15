@@ -1,7 +1,7 @@
 import Entry from '@/components/Entry';
 import Api, { APIResponse, ScreenType } from '@/service/Api';
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
 
 const ListHeader = (header: string) => () =>
 (
@@ -28,9 +28,8 @@ const GainersLoosers = ({
     })();
   }, [loaded, type]);
 
-  return (
-    loaded &&
-    data && (
+  if(loaded && data){
+    return (
       <>
         <FlatList
           data={data?.interesting}
@@ -49,8 +48,16 @@ const GainersLoosers = ({
           )}
         />
       </>
+    );
+  } else {
+    return (
+      <View style={styles.loadingScreen}>
+        <ActivityIndicator size="large" />
+      </View>
     )
-  );
+  }
+
+  
 };
 const styles = StyleSheet.create({
   headerContainer: {
@@ -63,6 +70,11 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
   },
+  loadingScreen: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'column'
+  }
 });
 
 export default GainersLoosers;
