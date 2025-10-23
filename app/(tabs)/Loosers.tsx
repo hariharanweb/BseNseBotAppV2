@@ -2,9 +2,9 @@ import { ScreenType } from "@/service/Api";
 import GainersLoosers from "../../components/GainersLoosers";
 
 export default function Loosers() {
-    return (
-        <GainersLoosers
-            type={ScreenType.LOOSERS}
-        />
-    )
+  return (
+    <GainersLoosers
+      type={ScreenType.LOOSERS}
+    />
+  )
 }

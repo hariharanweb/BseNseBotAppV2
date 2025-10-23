@@ -28,7 +28,7 @@ const GainersLoosers = ({
     })();
   }, [loaded, type]);
 
-  if(loaded && data){
+  if (loaded && data) {
     return (
       <>
         <FlatList
@@ -57,7 +57,7 @@ const GainersLoosers = ({
     )
   }
 
-  
+
 };
 const styles = StyleSheet.create({
   headerContainer: {

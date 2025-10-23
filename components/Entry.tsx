@@ -30,7 +30,7 @@ const Entry = ({ entry, type }: { entry: GainersAndLooser; type: ScreenType }) =
         />
       </View>
       <View style={styles.entryValue}>
-        <Text style={[styles.value, {color:textColor}]}>{entry.ltradert}</Text>
+        <Text style={[styles.value, { color: textColor }]}>{entry.ltradert}</Text>
         <Text
           style={
             valueStyle
