@@ -30,6 +30,13 @@ export default function TabLayout() {
           tabBarIcon: () => <MaterialIcons color={'red'} size={32} name={'trending-down'} />,
         }}
       />
+      <Tabs.Screen
+        name="Calculator"
+        options={{
+          title: 'Calc',
+          tabBarIcon: () => <MaterialIcons color={'lightblue'} size={32} name={'difference'} />,
+        }}
+      />
     </Tabs>
   );
 }
