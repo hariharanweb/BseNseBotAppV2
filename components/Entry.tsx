@@ -1,15 +1,25 @@
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme.web';
 import { MaterialIcons } from '@expo/vector-icons';
-import React, { Linking, StyleSheet, Text, View } from 'react-native';
+import React, { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { GainersAndLooser, ScreenType } from '../service/Api';
+import { useRouter } from 'expo-router';
 
 const Entry = ({ entry, type }: { entry: GainersAndLooser; type: ScreenType }) => {
   const colorScheme = useColorScheme();
+  const router = useRouter();
   const positiveNegative = type === ScreenType.LOOSERS ? '' : '+';
   const valueStyle =
     type === ScreenType.LOOSERS ? styles.negativeValue : styles.positiveValue;
   const textColor = colorScheme ? Colors[colorScheme].text : Colors.dark.text
+
+  const handlePricePress = () => {
+    router.push({
+      pathname: '/(tabs)/Calculator',
+      params: { price: entry.ltradert }
+    });
+  };
+
   return (
     <View style={styles.entryContainer}>
       <View style={styles.entryDetails}>
@@ -29,13 +39,13 @@ const Entry = ({ entry, type }: { entry: GainersAndLooser; type: ScreenType }) =
           }
         />
       </View>
-      <View style={styles.entryValue}>
+      <Pressable style={styles.entryValue} onPress={handlePricePress}>
         <Text style={[styles.value, { color: textColor }]}>{entry.ltradert}</Text>
         <Text
           style={
             valueStyle
           }>{`(${positiveNegative}${entry.change_percent})`}</Text>
-      </View>
+      </Pressable>
     </View>
   );
 };

@@ -1,7 +1,8 @@
-import { View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
-import { useState } from 'react';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useLocalSearchParams } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 
 const percentageChanges = [5, 4, 3, 2, 1.5, 1, 0.5, 0, -0.5, -1, -1.5, -2, -3, -4, -5];
 
@@ -26,11 +27,18 @@ const getBackgroundColor = (percentage: number) => {
 };
 
 export default function Calc() {
+  const params = useLocalSearchParams();
   const [stockPrice, setStockPrice] = useState('');
   const colorScheme = useColorScheme();
 
+  useEffect(() => {
+    if (params.price && typeof params.price === 'string') {
+      setStockPrice(params.price);
+    }
+  }, [params.price]);
+
   const price = parseFloat(stockPrice) || 0;
-  const tax = price * 0.001; // 0.1% tax
+  const tax = price * 0.002; // 0.2% tax
   const priceWithTax = price + tax;
 
   return (
@@ -51,7 +59,7 @@ export default function Calc() {
       </View>
 
       <View style={styles.resultContainer}>
-        <Text style={[styles.label, { color: Colors[colorScheme ?? 'light'].text }]}>Price with tax</Text>
+        <Text style={[styles.resultLabel, { color: Colors[colorScheme ?? 'light'].text }]}>Price with tax: </Text>
         <Text style={[styles.resultText, { color: Colors[colorScheme ?? 'light'].text }]}>
           {priceWithTax.toFixed(2)}
         </Text>
@@ -99,7 +107,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   resultContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 20,
+  },
+  resultLabel: {
+    fontSize: 16,
+    fontWeight: '600',
   },
   resultText: {
     fontSize: 24,
@@ -110,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: 8,
     paddingHorizontal: 16,
-    marginBottom: 4,
+    marginBottom: 2,
     borderRadius: 8,
   },
   percentageText: {
