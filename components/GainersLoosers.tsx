@@ -1,7 +1,7 @@
-import Entry from '@/components/Entry';
-import Api, { APIResponse, ScreenType } from '@/service/Api';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native';
+import Api, { APIResponse, ScreenType } from '../service/Api';
+import Entry from './Entry';
 
 const ListHeader = (header: string) => () =>
 (
@@ -16,6 +16,7 @@ const GainersLoosers = ({
   type: ScreenType;
 }) => {
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   const [data, setData] = useState<APIResponse>();
 
   useEffect(() => {
@@ -28,6 +29,13 @@ const GainersLoosers = ({
     })();
   }, [loaded, type]);
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    const jsonData = await Api.get(type);
+    setData(jsonData);
+    setRefreshing(false);
+  };
+
   if (loaded && data) {
     return (
       <>
@@ -38,6 +46,8 @@ const GainersLoosers = ({
           renderItem={({ item }) => (
             <Entry entry={item} type={type} />
           )}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
         />
         <FlatList
           data={data?.gainersAndLoosers}
@@ -46,6 +56,8 @@ const GainersLoosers = ({
           renderItem={({ item }) => (
             <Entry entry={item} type={type} />
           )}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
         />
       </>
     );
